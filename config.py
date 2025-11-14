@@ -14,7 +14,7 @@ OWNER_ID = int(os.environ.get("OWNER_ID", "6497757690"))
 PORT = os.environ.get("PORT", "8080")
 
 # Database
-DB_URI = os.environ.get("DB_URI", "")
+DB_URI = os.environ.get("DB_URI", "mongodb+srv://kantibhaipurohit195:nTA6VVaXfCu4h7L9@cluster0.vkva87l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 DB_NAME = os.environ.get("DB_NAME", "link")
 ENABLE_FSUB = os.environ.get("ENABLE_FSUB", True)
 FSUB = os.environ.get("DB_NAME", "Channel 1 : -1002121710549 ,  channel 2 : -1002555795391")
