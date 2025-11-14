@@ -16,7 +16,7 @@ log = logging.getLogger(__name__)
 
 
 # ===================== DYNAMIC FSUB LOADING =====================
-def load_fsub():
+def load_fsub(ENABLE_FSUB,FSUB):
     
     raw_fsub = FSUB
     if ENABLE_FSUB and raw_fsub:
@@ -64,8 +64,8 @@ async def safe_resolve_channel(client: Client, channel_id: int):
 
 
 # ===================== FORCE SUB CHECK =====================
-async def check_force_sub(client: Client, user_id: int, message) -> bool:
-    ENABLE_FSUB, FSUB = load_fsub()
+async def check_force_sub(client: Client, user_id: int, message,ENABLE_FSUB,FSUB) -> bool:
+    ENABLE_FSUB, FSUB = load_fsub(ENABLE_FSUB,FSUB)
 
     if not ENABLE_FSUB:
         return True  # skip if disabled
@@ -137,7 +137,7 @@ async def check_force_sub(client: Client, user_id: int, message) -> bool:
 @Bot.on_callback_query(filters.regex("fsub_check"))
 async def recheck_force_sub(client, callback_query: CallbackQuery):
     user_id = callback_query.from_user.id
-    ok = await check_force_sub(client, user_id, callback_query.message)
+    ok = await check_force_sub(client, user_id, callback_query.message,ENABLE_FSUB,FSUB)
     if ok:
         await callback_query.message.edit_text(
             "✅ Thanks! You’ve unlocked the bot features.\n\nSend /start again."
