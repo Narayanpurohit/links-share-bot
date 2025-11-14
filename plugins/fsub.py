@@ -25,7 +25,7 @@ def load_fsub():
         raw_list = FSUB.copy() if isinstance(FSUB, list) else []
 
         # Replace FSUB (dict) contents safely
-        FSUB.clear()
+        FSUB = {}
 
         for item in raw_list:
             if ":" in item:
