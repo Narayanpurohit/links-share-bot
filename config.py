@@ -5,9 +5,9 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 # Recommended
-TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "")
-APP_ID = int(os.environ.get("APP_ID", ""))
-API_HASH = os.environ.get("API_HASH", "")
+TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "6757393088:AAHd37ov80_qvWSXzQdFpeHS2H7cLwfegH4")
+APP_ID = int(os.environ.get("APP_ID", "15191874"))
+API_HASH = os.environ.get("API_HASH", "3037d39233c6fad9b80d83bb8a339a07")
 
 # Main
 OWNER_ID = int(os.environ.get("OWNER_ID", "6497757690"))
@@ -16,6 +16,8 @@ PORT = os.environ.get("PORT", "8080")
 # Database
 DB_URI = os.environ.get("DB_URI", "")
 DB_NAME = os.environ.get("DB_NAME", "link")
+ENABLE_FSUB = os.environ.get("ENABLE_FSUB", True)
+FSUB = os.environ.get("DB_NAME", "Channel 1 : -1002121710549 ,  channel 2 : -1002555795391")
 
 #Auto approve 
 CHAT_ID = [int(app_chat_id) if id_pattern.search(app_chat_id) else app_chat_id for app_chat_id in environ.get('CHAT_ID', '').split()] # dont change anything 
