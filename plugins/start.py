@@ -44,8 +44,8 @@ async def start_command(client: Bot, message: Message):
             
     await add_user(user_id)
     ok = await check_force_sub(client, user_id, message)
-        if not ok:
-            return
+    if not ok:
+        return
 			
 
    # ✅ Check Force Subscription
