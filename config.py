@@ -17,8 +17,7 @@ PORT = os.environ.get("PORT", "8080")
 DB_URI = os.environ.get("DB_URI", "mongodb+srv://kantibhaipurohit195:nTA6VVaXfCu4h7L9@cluster0.vkva87l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 DB_NAME = os.environ.get("DB_NAME", "link")
 ENABLE_FSUB = os.environ.get("ENABLE_FSUB", True)
-FSUB = os.environ.get("DB_NAME", "Channel 1 : -1002121710549 ,  channel 2 : -1002555795391")
-
+FSUB = {"Main Channel" : -1002668360346 , "Backup Channel" : -1002758325935}
 #Auto approve 
 CHAT_ID = [int(app_chat_id) if id_pattern.search(app_chat_id) else app_chat_id for app_chat_id in environ.get('CHAT_ID', '').split()] # dont change anything 
 TEXT = environ.get("APPROVED_WELCOME_TEXT", "<b>{mention},\n\nʏᴏᴜʀ ʀᴇǫᴜᴇsᴛ ᴛᴏ ᴊᴏɪɴ {title} ɪs ᴀᴘᴘʀᴏᴠᴇᴅ.\n\‣ ᴘᴏᴡᴇʀᴇᴅ ʙʏ @Codeflix_Bots</b>")
