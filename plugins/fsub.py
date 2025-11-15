@@ -20,58 +20,9 @@ log = logging.getLogger(__name__)
 
 
 
-# ===================== DYNAMIC FSUB LOADING =====================
-def load_fsub():
-    
-    raw_fsub = FSUB
-    FSUB = {}
-    if ENABLE_FSUB and raw_fsub:
-        try:
-            if isinstance(raw_fsub, list):
-                for item in raw_fsub:
-                    if ":" in item:
-                        name, cid = item.split(":", 1)
-                        FSUB[name.strip()] = int(cid.strip())
-            log.info(f"🔍 FSUB loaded successfully: {FSUB}")
-        except Exception as e:
-            log.error(f"⚠️ Error parsing FSUB: {e}")
-            FSUB = {}
-    else:
-        FSUB = {}
-        log.info("ℹ️ ENABLE_FSUB is False or FSUB empty — skipping FSUB parsing.")
-    
-    return ENABLE_FSUB, FSUB
-
-
-# ===================== SAFE CHANNEL RESOLVE =====================
-async def safe_resolve_channel(client: Client, channel_id: int):
-    """Ensure the bot session knows this channel peer."""
-    try:
-        peer = await client.resolve_peer(channel_id)
-        await client.invoke(functions.channels.GetFullChannel(channel=peer))
-        log.info(f"✅ Resolved channel peer successfully: {channel_id}")
-        return True
-    except PeerIdInvalid:
-        log.warning(f"⚠️ PeerIdInvalid for {channel_id}, trying import...")
-        try:
-            await client.invoke(functions.channels.GetChannels(id=[channel_id]))
-            log.info(f"✅ Imported channel peer successfully: {channel_id}")
-            return True
-        except Exception as e:
-            log.error(f"❌ Failed to import peer for channel {channel_id}: {e}")
-            return False
-    except FloodWait as e:
-        log.warning(f"⏳ FloodWait while resolving {channel_id}, sleeping {e.value}s...")
-        await asyncio.sleep(e.value)
-        return await safe_resolve_channel(client, channel_id)
-    except Exception as e:
-        log.error(f"❌ Unexpected error resolving peer {channel_id}: {e}")
-        return False
-
-
 # ===================== FORCE SUB CHECK =====================
 async def check_force_sub(client: Client, user_id: int, message) -> bool:
-    ENABLE_FSUB, FSUB = load_fsub()
+    ENABLE_FSUB, FSUB
 
     if not ENABLE_FSUB:
         return True  # skip if disabled
@@ -86,12 +37,6 @@ async def check_force_sub(client: Client, user_id: int, message) -> bool:
 
         except PeerIdInvalid:
             log.warning(f"⚠️ PeerIdInvalid while checking {channel_id}, resolving...")
-            ok = await safe_resolve_channel(client, channel_id)
-            if not ok:
-                await message.reply_text(
-                    f"⚠️ Could not access channel `{btn_name}` ({channel_id}).\n"
-                    f"Please re-add the bot as admin in that channel."
-                )
                 return False
             # retry check
             try:
